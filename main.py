@@ -38,9 +38,9 @@ def loadComics(filename=explanationsFile):
 def interpretQuery(query):
     # ollama interpreting
     prompt = (
-        "You are an xkcd search assistant. Reply ONLY with a space-separated list of keywords, "
-        "synonyms, and scientific concepts related to the user's query. "
-        "Do not write full sentences. Maximum 15 words."
+        "You are an xkcd search assistant. Analyze the user's query to understand the core concept, joke, or situation they are looking for. "
+        "Reply ONLY with a space-separated list of 5-10 highly relevant keywords, synonyms, or related scientific/internet concepts. "
+        "Do not write full sentences."
     )
     
     import time
@@ -99,7 +99,7 @@ def search(query, embedModel, index, faissIDs, bm25, bm25IDs, vectors, top_k=5):
     tStart = time.time()
 
     print(f"\n1/3 Interpreting query with Ollama ({ollamaModel})")
-    expanded_query = interpretQuery(query)
+    expandedQuery = query + " " + interpretQuery(query)
 
     tBM25 = time.time()
     # keyword search
@@ -112,7 +112,7 @@ def search(query, embedModel, index, faissIDs, bm25, bm25IDs, vectors, top_k=5):
     # vector search
     print("3/3 Doing FAISS search")
     instruction = "Represent this sentence for searching relevant passages: "
-    qVec = embedModel.encode(instruction + expanded_query, normalize_embeddings=True).astype("float32")
+    qVec = embedModel.encode(instruction + expandedQuery, normalize_embeddings=True).astype("float32")
     _, vIDX = index.search(np.array([qVec]), 50)
     faissTopIndices = vIDX[0]
     
