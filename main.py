@@ -38,9 +38,17 @@ def loadComics(filename=explanationsFile):
 def interpretQuery(query):
     # ollama interpreting
     prompt = (
-        "You are an xkcd search assistant. Analyze the user's query to understand the core concept, joke, or situation they are looking for. "
-        "Reply ONLY with a space-separated list of 5-10 highly relevant keywords, synonyms, or related scientific/internet concepts. "
-        "Do not write full sentences."
+        f"Analyze the underlying logic of this user's query: '{query}'\n\n"
+
+        "Identify the core intellectual pivot or conceptual irony that may or may not be the basis of the query.\n"
+        "- Focus on the structural premise, applying rigorous logic to interpreting the query.\n"
+        "- Avoid generic 'nerd culture' labels; specify the exact structural elements at play.\n"
+        "- IMPORTANT: If the idea is meta, define the specific boundary being crossed (e.g. self-referential, anti-humor, breaking the fourth wall, etc.).\n\n"
+        
+        "Output Requirements:\n"
+        "- Exactly ONE sentence.\n"
+        "- Maximum 25 words.\n"
+        "- High information density regarding the prompt's internal mechanism."
     )
     
     import time
@@ -54,7 +62,7 @@ def interpretQuery(query):
             ],
             options={
                 "temperature": 0.0, # more predictable
-                "num_predict": 20 # limits response length
+                # "num_predict": 20 # limits response length
             }
         )
         t1 = time.time()
@@ -99,7 +107,8 @@ def search(query, embedModel, index, faissIDs, bm25, bm25IDs, vectors, top_k=5):
     tStart = time.time()
 
     print(f"\n1/3 Interpreting query with Ollama ({ollamaModel})")
-    expandedQuery = query + " " + interpretQuery(query)
+    expandedQuery = interpretQuery(query)
+    print(expandedQuery)
 
     tBM25 = time.time()
     # keyword search
