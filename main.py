@@ -13,7 +13,6 @@ embeddingModel = "BAAI/bge-small-en-v1.5"
 ollamaModel = "llama3.2" 
 embeddingDimensions = 384 
 
-# --- LOAD & PREPROCESS ---
 def loadComics(filename=explanationsFile):
     # parses scrapy spider text file into a dictionary that looks like {comic_id: text_content}
     
@@ -131,7 +130,7 @@ def search(query, embedModel, index, faissIDs, bm25, bm25IDs, vectors, top_k=5):
     sortedHits = sorted(rrfScores.items(), key=lambda x: x[1], reverse=True)[:top_k]
 
     tEnd = time.time()
-    print(f"--- Timing Update ---")
+    print(f"Timing Update")
     print(f"BM25 Search:  {tFaiss - tBM25:.4f}s")
     print(f"FAISS Search: {tRRF - tFaiss:.4f}s")
     print(f"RRF Scoring:  {tEnd - tRRF:.4f}s")
@@ -148,17 +147,17 @@ def main():
         print("no comics found")
         return
 
-    vectors = build_vectors(comics, embedModel)
+    vectors = buildVectors(comics, embedModel)
 
     # prep FAISS
     faissIDs = list(vectors.keys())
     vecs = np.array([vectors[cid]["vector"] for cid in faissIDs], dtype="float32")
-    index = faiss.IndexFlatIP(EMBED_DIM)
+    index = faiss.IndexFlatIP(embeddingDimensions)
     index.add(vecs)
 
     # prep BM25
-    bm25, bm25IDs = setup_bm25(comics)
-    print(f"System ready. {len(comics)} comics indexed.")
+    bm25, bm25IDs = setupBM25(comics)
+    print(f"{len(comics)} comics indexed")
 
     while True:
         query = input("\nSearch for an xkcd comic (or 'exit'): ").strip()
