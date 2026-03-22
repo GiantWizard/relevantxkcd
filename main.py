@@ -46,10 +46,17 @@ def interpretQuery(query):
     import time
     t0 = time.time()
     try:
-        response = ollama.chat(model=ollamaModel, messages=[
-            {"role": "system", "content": prompt},
-            {"role": "user", "content": f"Describe the xkcd comic about: {query}"}
-        ])
+        response = ollama.chat(
+            model=ollamaModel, 
+            messages=[
+                {"role": "system", "content": prompt},
+                {"role": "user", "content": f"Describe the xkcd comic about: {query}"}
+            ],
+            options={
+                "temperature": 0.0, # more predictable
+                "num_predict": 20 # limits response length
+            }
+        )
         t1 = time.time()
         print(f"Ollama took {t1 - t0:.2f}s")
         return response["message"]["content"].strip()
