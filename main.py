@@ -43,10 +43,11 @@ def interpretQuery(query):
         "Identify the core intellectual pivot or conceptual irony that may or may not be the basis of the query.\n"
         "- Focus on the structural premise, applying rigorous logic to interpreting the query.\n"
         "- Avoid generic 'nerd culture' labels; specify the exact structural elements at play.\n"
-        "- IMPORTANT: If the idea is meta, define the specific boundary being crossed (e.g. self-referential, anti-humor, breaking the fourth wall, etc.).\n\n"
+        "- If, and only if, the idea is meta, define the specific boundary being crossed (e.g. self-referential, anti-humor, breaking the fourth wall, etc.).\n"
+        "- Understand that there might not be anything meta about the query, and that's a valid outcome.\n\n"
         
         "Output Requirements:\n"
-        "- Exactly ONE sentence.\n"
+        "- No need for a sentence if you so desire.\n"
         "- Maximum 25 words.\n"
         "- High information density regarding the prompt's internal mechanism."
     )
