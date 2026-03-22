@@ -86,7 +86,7 @@ with col2:
     
     # search bar 
     st.markdown("<br>", unsafe_allow_html=True)
-    query = st.text_input("What's the situation?:", placeholder="e.g., Correct Horse Battery Staple...", label_visibility="collapsed")
+    query = st.text_input("What's the situation?:", placeholder="e.g., password strength...", label_visibility="collapsed")
     st.markdown("<br>", unsafe_allow_html=True)
 
 # pre-load models so it doesn't take forever
