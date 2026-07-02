@@ -1,6 +1,6 @@
 # relevantxkcd
 
-Semantic search engine for xkcd comics. Type a situation, a feeling, or a half-formed thought — get back the xkcd that fits, even if you don't know the title or number.
+Semantic search engine for xkcd comics. Simply query a situation, a feeling, or a half-formed thought, and get back the xkcd that fits.
 
 **Live demo:** [huggingface.co/spaces/GiantWizardWizard/relevantxkcd](https://huggingface.co/spaces/GiantWizardWizard/relevantxkcd)
 
@@ -11,7 +11,7 @@ Every xkcd nerd has the same problem: you remember a comic exists for a situatio
 ## How it works
 
 1. **Corpus** — a Scrapy spider (`xkcd.py`) crawls [explainxkcd.com](https://www.explainxkcd.com) for every comic's alt text, transcript, explanation, and discussion, and saves it to `explanations.txt`.
-2. **Query expansion** — the raw query is passed to a local LLM (Ollama, `llama3.2`) which is prompted to identify the underlying conceptual joke/pivot the user might be describing, rather than just echoing keywords back.
+2. **Query expansion** - The raw query is passed to a local LLM (Ollama, `llama3.2`) which is prompted to identify the underlying conceptual joke/pivot the user might be describing.
 3. **Hybrid retrieval** — the expanded query is searched two ways in parallel:
    - **FAISS** vector search over `sentence-transformers` embeddings (`BAAI/bge-small-en-v1.5`) of each comic's text, for semantic/conceptual matches.
    - **BM25** keyword search over the same corpus, for exact-term matches.
@@ -20,7 +20,7 @@ Every xkcd nerd has the same problem: you remember a comic exists for a situatio
 
 ## Stack
 
-Python · Streamlit · FAISS · sentence-transformers · rank-bm25 · Ollama (llama3.2) · Scrapy · Docker, deployed as a Hugging Face Space (auto-synced from `main` via GitHub Actions)
+Python · Streamlit · FAISS · sentence-transformers · rank-bm25 · Ollama (llama3.2) · Scrapy · Docker, deployed as a Hugging Face Space
 
 ## Running locally
 
