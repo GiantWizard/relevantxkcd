@@ -38,18 +38,18 @@ def loadComics(filename=explanationsFile):
 def interpretQuery(query):
     # ollama interpreting
     prompt = (
-        f"Analyze the underlying logic of this user's query: '{query}'\n\n"
+        f"Figure out what's actually going on in this query: '{query}'\n\n"
 
-        "Identify the core intellectual pivot or conceptual irony that may or may not be the basis of the query.\n"
-        "- Focus on the structural premise, applying rigorous logic to interpreting the query.\n"
-        "- Avoid generic 'nerd culture' labels; specify the exact structural elements at play.\n"
-        "- If, and only if, the idea is meta, define the specific boundary being crossed (e.g. self-referential, anti-humor, breaking the fourth wall, etc.).\n"
-        "- Understand that there might not be anything meta about the query, and that's a valid outcome.\n\n"
-        
-        "Output Requirements:\n"
-        "- No need for a sentence if you so desire.\n"
-        "- Maximum 25 words.\n"
-        "- High information density regarding the prompt's internal mechanism."
+        "Try to figure out the main point or joke behind the query, if there is one.\n"
+        "- Think about what's actually being asked, not just surface-level keywords.\n"
+        "- Don't just say 'nerd culture' or something vague, call out the specific thing going on.\n"
+        "- If it's a meta joke, say what kind (e.g. self-referential, anti-humor, breaking the fourth wall, etc.).\n"
+        "- It's fine if there's nothing meta going on, don't force it.\n\n"
+
+        "Keep it short:\n"
+        "- Doesn't need to be a full sentence.\n"
+        "- 25 words max.\n"
+        "- Just get to the point, no fluff."
     )
     
     import time
